@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer>
-      © {new Date().getFullYear()} KassoLightning — Built for Dakar Bitcoin Hackathon 🧡
+      KassoLightning &copy; 2025 | Testnet Demo
     </footer>
   );
 }

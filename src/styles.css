@@ -1,4 +1,22 @@
-/* Reset */
+/* APP CONTAINER FLEXBOX LAYOUT */
+html, body {
+  height: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1; /* takes remaining vertical space */
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ========== RESET & BASE ========== */
 * {
   margin: 0;
   padding: 0;
@@ -6,89 +24,156 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5; /* light gray */
-  color: #222; /* dark text */
-  line-height: 1.5;
+  font-family: "Inter", Arial, sans-serif;
+  background-color: #f4f6f8;
+  color: #1a1a1a;
+  line-height: 1.6;
 }
 
-/* Header */
+/* ========== HEADER ========== */
 header {
   background-color: #111;
   color: #fff;
   padding: 1rem 2rem;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 nav a {
   color: #f7931a;
-  margin: 0 10px;
+  margin-left: 1rem;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+nav a::after {
+  content: '';
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: #f7931a;
+  transition: width 0.3s ease;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+nav a:hover::after {
+  width: 100%;
 }
 
 nav a:hover {
   color: #ffb347;
-  transform: translateY(-2px);
-  transition: all 0.2s ease;
 }
 
-/* Footer */
+/* ========== FOOTER ========== */
 footer {
   background-color: #111;
   color: #ccc;
   text-align: center;
   padding: 1rem 2rem;
-  margin-top: 2rem;
   font-size: 0.9rem;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
 }
 
-/* Main content */
+
+/* ========== MAIN LAYOUT ========== */
 main {
-  padding: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Card */
+/* ========== CARD COMPONENTS ========== */
 .card {
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 2rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
 }
 
-/* Buttons */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* ========== HEADINGS ========== */
+h1, h2, h3 {
+  color: #111;
+  margin-bottom: 1rem;
+}
+
+/* ========== BUTTONS ========== */
 button {
-  background-color: #f7931a;
+  background: linear-gradient(135deg,#f7931a,#ffb347);
   color: #fff;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
-  padding: 0.7rem 1.5rem;
-  font-weight: bold;
+  border-radius: 10px;
+  padding: 0.7rem 1.8rem;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(247,147,26,0.4);
 }
 
 button:hover {
-  background-color: #e07d00;
   transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(247,147,26,0.5);
 }
 
-/* Inputs */
-input {
-  padding: 0.6rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  margin-right: 0.5rem;
+/* ========== INPUTS ========== */
+input, select, textarea {
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  width: 100%;
   margin-bottom: 1rem;
-  width: 100%;
+  transition: all 0.25s ease;
 }
 
-/* Page styles */
+input:focus, select:focus, textarea:focus {
+  border-color: #f7931a;
+  outline: none;
+  box-shadow: 0 0 8px rgba(247,147,26,0.3);
+}
+
+/* ========== PAGE ANIMATION ========== */
 .page {
-  opacity: 1;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  nav a {
+    margin: 0 0.5rem;
+  }
+
+  main {
+    padding: 2rem 1rem;
+  }
 }

@@ -1,16 +1,15 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   return (
     <header>
-      <h2>KassoLightning ⚡</h2>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/create-invoice">Create Invoice</Link>
-        <Link to="/transactions">Transactions</Link>
-        <Link to="/withdraw">Withdraw</Link>
-        <Link to="/settings">Settings</Link>
+        <NavLink to="/" end style={{ margin: "0 1rem", color: "#fff" }}>Home</NavLink>
+        <NavLink to="/dashboard" style={{ margin: "0 1rem", color: "#fff" }}>Dashboard</NavLink>
+        <NavLink to="/create-invoice" style={{ margin: "0 1rem", color: "#fff" }}>Create Invoice</NavLink>
+        <NavLink to="/transactions" style={{ margin: "0 1rem", color: "#fff" }}>Transactions</NavLink>
+        <NavLink to="/withdraw" style={{ margin: "0 1rem", color: "#fff" }}>Withdraw</NavLink>
+        <NavLink to="/settings" style={{ margin: "0 1rem", color: "#fff" }}>Settings</NavLink>
       </nav>
     </header>
   );
