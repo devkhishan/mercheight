@@ -11,7 +11,16 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Environment variables and secrets
+.env
+.env.*
+*.env
+*.env.*
 firebase-service.json
+*firebase-service.json
+kassolightning-backend/firebase-service.json
+kassolightning-backend/.env
 
 # Editor directories and files
 .vscode/*
