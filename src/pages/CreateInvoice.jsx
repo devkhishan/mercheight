@@ -1,14 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QRCodeSVG as QRCode } from "qrcode.react";
 
 export default function CreateInvoice() {
   const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
   const [invoice, setInvoice] = useState(null);
+  const [invoices, setInvoices] = useState([]);
   const [amount, setAmount] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [xofAmount, setXofAmount] = useState("");
   const BTC_RATE_XOF = 35000000; // 35M XOF per BTC
+
+  useEffect(() => {
+    fetchInvoices();
+  }, []);
+
+  const fetchInvoices = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/api/invoices`);
+      const data = await res.json();
+      if (data.success) {
+        setInvoices(data.invoices);
+      }
+    } catch (err) {
+      console.error('Failed to fetch invoices:', err);
+    }
+  };
   
   // Convert XOF to satoshis
   const xofToSats = (xof) => {
@@ -55,6 +72,8 @@ export default function CreateInvoice() {
       const data = await res.json();
       if (data.success) {
         setInvoice(data.invoice);
+        // Refresh the invoices list
+        await fetchInvoices();
       } else {
         setError(data.message || 'Failed to create invoice');
       }
@@ -130,6 +149,27 @@ export default function CreateInvoice() {
           </div>
         </div>
       )}
+
+      {/* Recent Invoices List */}
+      <div style={{ marginTop: '2rem' }}>
+        <h3>Recent Invoices</h3>
+        <div className="invoices-list">
+          {invoices.map(inv => (
+            <div key={inv.id} className="invoice-item" style={{
+              padding: '1rem',
+              border: '1px solid #ddd',
+              borderRadius: '4px',
+              marginBottom: '1rem'
+            }}>
+              <div><strong>Amount:</strong> {inv.amount} sats ({satsToXof(inv.amount)} XOF)</div>
+              <div><strong>Status:</strong> {inv.paid ? 'Paid' : 'Pending'}</div>
+              <div><strong>Created:</strong> {new Date(inv.createdAt).toLocaleString()}</div>
+              <div><strong>Memo:</strong> {inv.memo}</div>
+              <div style={{ wordBreak: 'break-all' }}><strong>Invoice:</strong> {inv.bolt11}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -4,6 +4,29 @@ import crypto from 'crypto';
 
 const router = express.Router();
 
+// Get all invoices
+router.get("/", async (req, res) => {
+  try {
+    const invoicesSnapshot = await db.collection('invoices').orderBy('createdAt', 'desc').get();
+    const invoices = [];
+    
+    invoicesSnapshot.forEach(doc => {
+      invoices.push(doc.data());
+    });
+
+    return res.status(200).json({
+      success: true,
+      invoices: invoices
+    });
+  } catch (error) {
+    console.error('Error fetching invoices:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to fetch invoices'
+    });
+  }
+});
+
 // Mock function to generate fake Lightning invoice
 const generateMockInvoice = (amount, memo) => {
   const id = crypto.randomBytes(32).toString('hex');
@@ -47,6 +70,15 @@ router.post("/create", async (req, res) => {
       paid: false,
       createdAt: new Date().toISOString()
     };
+
+    // Store invoice in Firebase
+    await db.collection('invoices').doc(invoice.id).set(invoiceData);
+
+    // Return the created invoice
+    return res.status(200).json({
+      success: true,
+      invoice: invoiceData
+    });
 
     // Save to Firebase
     try {
